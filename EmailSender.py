@@ -66,7 +66,7 @@ class EmailSender:
             msg_bio = BIO.MemoryBuffer(bytes(msg_str, 'utf-8')) # Recreate coz sign() has consumed it.
 
         if self.encrypt:
-            self.add_certificates(self, smime, certs)
+            self.add_certificates(smime, certs)
             tmp_bio = BIO.MemoryBuffer()
             if self.sign:
                 smime.write(tmp_bio, p7, msg_bio)
