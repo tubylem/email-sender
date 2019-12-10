@@ -1,7 +1,7 @@
 # email-sender
-The program sends signed and encrypted emails
+The program sends signed and encrypted emails.
 
-# Requirements to build the program
+# Requirements to install m2crypto
 ```
 yum install gcc gcc-c++ make openssl-devel python3-devel
 ```
@@ -13,6 +13,17 @@ openssl pkcs12 -export -out server.pfx -inkey server.key -in server.crt
 ```
 
 # Usage
+The configuration of your email server is placed in config.ini file.
+
 ```
-./EmailSender.py --from "sender@example.com" --to "receiver@example.com" --subject "Test" --body "<h1>test message</h1>" --body_type html --attachments test.txt --certificates server.crt
+./EmailSender.py \
+  --from "sender@example.com" \
+  --to "receiver@example.com" \
+  --subject "Test" \
+  --body "<h1>test message</h1>" \
+  --body_type html \
+  --attachments test.txt \
+  --certificates server.crt
+  --password "XXXXXX"
 ```
+
