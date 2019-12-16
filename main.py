@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from emailsender import EmailSender
+from message import Message
 from argparse import ArgumentParser
 from configparser import ConfigParser
 
@@ -32,19 +33,22 @@ def main():
                         encrypt=conf_parser.getboolean('mail', 'encrypt')
                        )
     
-    msg = email.create_message(body=args.body, 
-                              type=args.body_type, 
-                              attachments=args.attachments
-                             )
+    msg = Message()
+    msg.set_sender(args.from_address)
+    msg.set_recipients(args.to_addresses)
+    msg.set_subject(args.subject)
+    msg.set_body(args.body, type=args.body_type)
+    
+    for attachment in args.attachments:
+        msg.add_attachment(attachment)
+    
+    message = email.set_message(msg, certificates=args.certificates)
+    
+    print(message)
                              
-    results = email.send_email(args.from_address, 
-                              args.to_addresses, 
-                              args.subject, 
-                              msg, 
-                              certs=args.certificates, 
-                              password=args.password
-                             )
-    print(results)
+    email.send(message, 
+               password=args.password
+              )
 
 if __name__ == "__main__":
     main()
