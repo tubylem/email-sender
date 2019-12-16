@@ -30,6 +30,24 @@ print(raw_message)
 email.send(raw_message)
 ```
 
+### Sign & Encrypt example
+```
+from emailsender import EmailSender
+from message import Message
+
+msg = Message()
+msg.set_sender("sender@example.com")
+msg.set_recipients(["recipient@example.com"])
+msg.set_subject("Test")
+msg.set_body("<h1>Test message</h1>", type="html")
+    
+email = EmailSender(host="localhost", port=25, sign=True, encrypt=True, key="server.key", cert="server.pem")
+raw_message = email.set_message(msg, certificates=["cert1.pem", "cert2.pem"])
+print(raw_message)
+                             
+email.send(raw_message)
+```
+
 ### Usage
 The configuration of your email server is placed in config.ini file.
 
